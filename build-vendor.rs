@@ -13,13 +13,15 @@ impl BitwuzlaBuild {
     pub fn new() -> Self {
         Self {
             src_dir: Path::new(env!("CARGO_MANIFEST_DIR")).join("bitwuzla"),
-            out_dir: Path::new(&env::var_os("OUT_DIR").expect("`OUT_DIR` not set")).join("vendor-build"),
+            out_dir: Path::new(&env::var_os("OUT_DIR").expect("`OUT_DIR` not set"))
+                .join("vendor-build"),
         }
     }
 
     pub fn prerequisites(self) -> Self {
         if !self.out_dir.exists() {
-            copy_dir(&self.src_dir, &self.out_dir).expect("failed to copy Bitwuzla sources to `OUT_DIR`");
+            copy_dir(&self.src_dir, &self.out_dir)
+                .expect("failed to copy Bitwuzla sources to `OUT_DIR`");
         }
 
         if !self.out_dir.join("deps/install/lib/libcadical.a").exists() {
@@ -32,7 +34,11 @@ impl BitwuzlaBuild {
             );
         }
 
-        if !self.out_dir.join("deps/install/lib/libbtor2parser.a").exists() {
+        if !self
+            .out_dir
+            .join("deps/install/lib/libbtor2parser.a")
+            .exists()
+        {
             self.run_command(
                 "Download and build BTOR2Tools",
                 Command::new("/usr/bin/env")
@@ -52,7 +58,10 @@ impl BitwuzlaBuild {
             );
         }
 
-        println!("cargo:rustc-link-search=native={}", self.out_dir.join("deps/install/lib").display());
+        println!(
+            "cargo:rustc-link-search=native={}",
+            self.out_dir.join("deps/install/lib").display()
+        );
         println!("cargo:rustc-link-lib=static=cadical");
         println!("cargo:rustc-link-lib=static=btor2parser");
 
@@ -74,7 +83,10 @@ impl BitwuzlaBuild {
                 .current_dir(self.out_dir.join("build")),
         );
 
-        println!("cargo:rustc-link-search=native={}", self.out_dir.join("build/lib").display());
+        println!(
+            "cargo:rustc-link-search=native={}",
+            self.out_dir.join("build/lib").display()
+        );
         println!("cargo:rustc-link-lib=static=bitwuzla");
         println!("cargo:rustc-link-lib=stdc++");
         println!("cargo:rustc-link-lib=gmp");
@@ -90,9 +102,7 @@ impl BitwuzlaBuild {
         if !status.success() {
             panic!(
                 "*** ERROR in action `{}`, exit status {}\n*** Command: {:?}",
-                description,
-                status,
-                command,
+                description, status, command,
             );
         }
     }
