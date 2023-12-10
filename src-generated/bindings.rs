@@ -193,6 +193,7 @@ pub struct BitwuzlaOptionNumericValue {
     #[doc = " Maximum numeric option value."]
     pub max: u64,
 }
+#[allow(non_snake_case)]
 #[test]
 fn bindgen_test_layout_BitwuzlaOptionNumericValue() {
     const UNINIT: ::std::mem::MaybeUninit<BitwuzlaOptionNumericValue> =
@@ -261,6 +262,7 @@ pub struct BitwuzlaOptionModeValue {
     #[doc = " List of available modes."]
     pub modes: *mut *const ::std::os::raw::c_char,
 }
+#[allow(non_snake_case)]
 #[test]
 fn bindgen_test_layout_BitwuzlaOptionModeValue() {
     const UNINIT: ::std::mem::MaybeUninit<BitwuzlaOptionModeValue> =
@@ -323,6 +325,7 @@ pub union BitwuzlaOptionValue {
     pub numeric: BitwuzlaOptionNumericValue,
     pub mode: BitwuzlaOptionModeValue,
 }
+#[allow(non_snake_case)]
 #[test]
 fn bindgen_test_layout_BitwuzlaOptionValue() {
     const UNINIT: ::std::mem::MaybeUninit<BitwuzlaOptionValue> =
@@ -362,6 +365,7 @@ fn bindgen_test_layout_BitwuzlaOptionValue() {
         )
     );
 }
+#[allow(non_snake_case)]
 #[test]
 fn bindgen_test_layout_BitwuzlaOptionInfo() {
     const UNINIT: ::std::mem::MaybeUninit<BitwuzlaOptionInfo> = ::std::mem::MaybeUninit::uninit();

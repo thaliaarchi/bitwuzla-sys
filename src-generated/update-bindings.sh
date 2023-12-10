@@ -12,11 +12,16 @@ bindgen \
     -- \
     -I../bitwuzla/include
 
-# Name anonymous nested structs.
+# Clean up the bindings:
+# - Name nested structs within a union
+# - Ignore warnings for bindgen layout tests, that mix snake case and pascal
+#   case
 sed -i.bak \
     -e 's/__bindgen_anon_1: BitwuzlaOptionInfo__bindgen_ty_1,/value: BitwuzlaOptionValue,/' \
     -e 's/BitwuzlaOptionInfo__bindgen_ty_1/BitwuzlaOptionValue/' \
     -e 's/BitwuzlaOptionInfo_NumericValue/BitwuzlaOptionNumericValue/' \
     -e 's/BitwuzlaOptionInfo_ModeValue/BitwuzlaOptionModeValue/' \
+    -e '/#\[test\]/i \
+#[allow(non_snake_case)]' \
     bindings.rs
 rm bindings.rs.bak
