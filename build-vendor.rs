@@ -24,68 +24,28 @@ impl BitwuzlaBuild {
                 .expect("failed to copy Bitwuzla sources to `OUT_DIR`");
         }
 
-        if !self.out_dir.join("deps/install/lib/libcadical.a").exists() {
-            self.run_command(
-                "Download and build CaDiCaL",
-                Command::new("/usr/bin/env")
-                    .arg("bash")
-                    .arg(self.out_dir.join("contrib/setup-cadical.sh"))
-                    .current_dir(&self.out_dir),
-            );
-        }
-
-        if !self
-            .out_dir
-            .join("deps/install/lib/libbtor2parser.a")
-            .exists()
-        {
-            self.run_command(
-                "Download and build BTOR2Tools",
-                Command::new("/usr/bin/env")
-                    .arg("bash")
-                    .arg(self.out_dir.join("contrib/setup-btor2tools.sh"))
-                    .current_dir(&self.out_dir),
-            );
-        }
-
-        if !self.out_dir.join("deps/symfpu").exists() {
-            self.run_command(
-                "Download and build SymFPU",
-                Command::new("/usr/bin/env")
-                    .arg("bash")
-                    .arg(self.out_dir.join("contrib/setup-symfpu.sh"))
-                    .current_dir(&self.out_dir),
-            );
-        }
-
-        println!(
-            "cargo:rustc-link-search=native={}",
-            self.out_dir.join("deps/install/lib").display()
-        );
-        println!("cargo:rustc-link-lib=static=cadical");
-        println!("cargo:rustc-link-lib=static=btor2parser");
-
         self
     }
 
     pub fn build(self) -> Self {
         self.run_command(
             "Configure Bitwuzla",
-            Command::new("/bin/sh")
-                .arg(self.out_dir.join("configure.sh"))
+            Command::new("python3")
+                .arg(self.out_dir.join("configure.py"))
                 .current_dir(&self.out_dir),
         );
 
         self.run_command(
             "Build Bitwuzla",
-            Command::new("make")
-                .arg("-j")
+            Command::new("meson")
+                .arg("install")
+                .args(["--destdir", "install"])
                 .current_dir(self.out_dir.join("build")),
         );
 
         println!(
             "cargo:rustc-link-search=native={}",
-            self.out_dir.join("build/lib").display()
+            self.out_dir.join("build/install/usr/local/lib").display(),
         );
         println!("cargo:rustc-link-lib=static=bitwuzla");
         println!("cargo:rustc-link-lib=stdc++");
