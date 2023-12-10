@@ -9,4 +9,6 @@ bindgen \
     --no-doc-comments \
     --raw-line 'use libc::FILE;' \
     --no-prepend-enum-name \
-    ../bitwuzla/src/api/c/bitwuzla.h
+    ../bitwuzla/include/bitwuzla/c/bitwuzla.h \
+    -- \
+    -I../bitwuzla/include
