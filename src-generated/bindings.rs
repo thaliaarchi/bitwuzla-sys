@@ -170,37 +170,37 @@ pub struct BitwuzlaOptionInfo {
     pub lng: *const ::std::os::raw::c_char,
     pub description: *const ::std::os::raw::c_char,
     pub is_numeric: bool,
-    pub __bindgen_anon_1: BitwuzlaOptionInfo__bindgen_ty_1,
+    pub value: BitwuzlaOptionValue,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
-pub struct BitwuzlaOptionInfo_NumericValue {
+pub struct BitwuzlaOptionNumericValue {
     pub cur: u64,
     pub dflt: u64,
     pub min: u64,
     pub max: u64,
 }
 #[test]
-fn bindgen_test_layout_BitwuzlaOptionInfo_NumericValue() {
-    const UNINIT: ::std::mem::MaybeUninit<BitwuzlaOptionInfo_NumericValue> =
+fn bindgen_test_layout_BitwuzlaOptionNumericValue() {
+    const UNINIT: ::std::mem::MaybeUninit<BitwuzlaOptionNumericValue> =
         ::std::mem::MaybeUninit::uninit();
     let ptr = UNINIT.as_ptr();
     assert_eq!(
-        ::std::mem::size_of::<BitwuzlaOptionInfo_NumericValue>(),
+        ::std::mem::size_of::<BitwuzlaOptionNumericValue>(),
         32usize,
-        concat!("Size of: ", stringify!(BitwuzlaOptionInfo_NumericValue))
+        concat!("Size of: ", stringify!(BitwuzlaOptionNumericValue))
     );
     assert_eq!(
-        ::std::mem::align_of::<BitwuzlaOptionInfo_NumericValue>(),
+        ::std::mem::align_of::<BitwuzlaOptionNumericValue>(),
         8usize,
-        concat!("Alignment of ", stringify!(BitwuzlaOptionInfo_NumericValue))
+        concat!("Alignment of ", stringify!(BitwuzlaOptionNumericValue))
     );
     assert_eq!(
         unsafe { ::std::ptr::addr_of!((*ptr).cur) as usize - ptr as usize },
         0usize,
         concat!(
             "Offset of field: ",
-            stringify!(BitwuzlaOptionInfo_NumericValue),
+            stringify!(BitwuzlaOptionNumericValue),
             "::",
             stringify!(cur)
         )
@@ -210,7 +210,7 @@ fn bindgen_test_layout_BitwuzlaOptionInfo_NumericValue() {
         8usize,
         concat!(
             "Offset of field: ",
-            stringify!(BitwuzlaOptionInfo_NumericValue),
+            stringify!(BitwuzlaOptionNumericValue),
             "::",
             stringify!(dflt)
         )
@@ -220,7 +220,7 @@ fn bindgen_test_layout_BitwuzlaOptionInfo_NumericValue() {
         16usize,
         concat!(
             "Offset of field: ",
-            stringify!(BitwuzlaOptionInfo_NumericValue),
+            stringify!(BitwuzlaOptionNumericValue),
             "::",
             stringify!(min)
         )
@@ -230,7 +230,7 @@ fn bindgen_test_layout_BitwuzlaOptionInfo_NumericValue() {
         24usize,
         concat!(
             "Offset of field: ",
-            stringify!(BitwuzlaOptionInfo_NumericValue),
+            stringify!(BitwuzlaOptionNumericValue),
             "::",
             stringify!(max)
         )
@@ -238,33 +238,33 @@ fn bindgen_test_layout_BitwuzlaOptionInfo_NumericValue() {
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
-pub struct BitwuzlaOptionInfo_ModeValue {
+pub struct BitwuzlaOptionModeValue {
     pub cur: *const ::std::os::raw::c_char,
     pub dflt: *const ::std::os::raw::c_char,
     pub num_modes: usize,
     pub modes: *mut *const ::std::os::raw::c_char,
 }
 #[test]
-fn bindgen_test_layout_BitwuzlaOptionInfo_ModeValue() {
-    const UNINIT: ::std::mem::MaybeUninit<BitwuzlaOptionInfo_ModeValue> =
+fn bindgen_test_layout_BitwuzlaOptionModeValue() {
+    const UNINIT: ::std::mem::MaybeUninit<BitwuzlaOptionModeValue> =
         ::std::mem::MaybeUninit::uninit();
     let ptr = UNINIT.as_ptr();
     assert_eq!(
-        ::std::mem::size_of::<BitwuzlaOptionInfo_ModeValue>(),
+        ::std::mem::size_of::<BitwuzlaOptionModeValue>(),
         32usize,
-        concat!("Size of: ", stringify!(BitwuzlaOptionInfo_ModeValue))
+        concat!("Size of: ", stringify!(BitwuzlaOptionModeValue))
     );
     assert_eq!(
-        ::std::mem::align_of::<BitwuzlaOptionInfo_ModeValue>(),
+        ::std::mem::align_of::<BitwuzlaOptionModeValue>(),
         8usize,
-        concat!("Alignment of ", stringify!(BitwuzlaOptionInfo_ModeValue))
+        concat!("Alignment of ", stringify!(BitwuzlaOptionModeValue))
     );
     assert_eq!(
         unsafe { ::std::ptr::addr_of!((*ptr).cur) as usize - ptr as usize },
         0usize,
         concat!(
             "Offset of field: ",
-            stringify!(BitwuzlaOptionInfo_ModeValue),
+            stringify!(BitwuzlaOptionModeValue),
             "::",
             stringify!(cur)
         )
@@ -274,7 +274,7 @@ fn bindgen_test_layout_BitwuzlaOptionInfo_ModeValue() {
         8usize,
         concat!(
             "Offset of field: ",
-            stringify!(BitwuzlaOptionInfo_ModeValue),
+            stringify!(BitwuzlaOptionModeValue),
             "::",
             stringify!(dflt)
         )
@@ -284,7 +284,7 @@ fn bindgen_test_layout_BitwuzlaOptionInfo_ModeValue() {
         16usize,
         concat!(
             "Offset of field: ",
-            stringify!(BitwuzlaOptionInfo_ModeValue),
+            stringify!(BitwuzlaOptionModeValue),
             "::",
             stringify!(num_modes)
         )
@@ -294,7 +294,7 @@ fn bindgen_test_layout_BitwuzlaOptionInfo_ModeValue() {
         24usize,
         concat!(
             "Offset of field: ",
-            stringify!(BitwuzlaOptionInfo_ModeValue),
+            stringify!(BitwuzlaOptionModeValue),
             "::",
             stringify!(modes)
         )
@@ -302,26 +302,26 @@ fn bindgen_test_layout_BitwuzlaOptionInfo_ModeValue() {
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
-pub union BitwuzlaOptionInfo__bindgen_ty_1 {
-    pub numeric: BitwuzlaOptionInfo_NumericValue,
-    pub mode: BitwuzlaOptionInfo_ModeValue,
+pub union BitwuzlaOptionValue {
+    pub numeric: BitwuzlaOptionNumericValue,
+    pub mode: BitwuzlaOptionModeValue,
 }
 #[test]
-fn bindgen_test_layout_BitwuzlaOptionInfo__bindgen_ty_1() {
-    const UNINIT: ::std::mem::MaybeUninit<BitwuzlaOptionInfo__bindgen_ty_1> =
+fn bindgen_test_layout_BitwuzlaOptionValue() {
+    const UNINIT: ::std::mem::MaybeUninit<BitwuzlaOptionValue> =
         ::std::mem::MaybeUninit::uninit();
     let ptr = UNINIT.as_ptr();
     assert_eq!(
-        ::std::mem::size_of::<BitwuzlaOptionInfo__bindgen_ty_1>(),
+        ::std::mem::size_of::<BitwuzlaOptionValue>(),
         32usize,
-        concat!("Size of: ", stringify!(BitwuzlaOptionInfo__bindgen_ty_1))
+        concat!("Size of: ", stringify!(BitwuzlaOptionValue))
     );
     assert_eq!(
-        ::std::mem::align_of::<BitwuzlaOptionInfo__bindgen_ty_1>(),
+        ::std::mem::align_of::<BitwuzlaOptionValue>(),
         8usize,
         concat!(
             "Alignment of ",
-            stringify!(BitwuzlaOptionInfo__bindgen_ty_1)
+            stringify!(BitwuzlaOptionValue)
         )
     );
     assert_eq!(
@@ -329,7 +329,7 @@ fn bindgen_test_layout_BitwuzlaOptionInfo__bindgen_ty_1() {
         0usize,
         concat!(
             "Offset of field: ",
-            stringify!(BitwuzlaOptionInfo__bindgen_ty_1),
+            stringify!(BitwuzlaOptionValue),
             "::",
             stringify!(numeric)
         )
@@ -339,7 +339,7 @@ fn bindgen_test_layout_BitwuzlaOptionInfo__bindgen_ty_1() {
         0usize,
         concat!(
             "Offset of field: ",
-            stringify!(BitwuzlaOptionInfo__bindgen_ty_1),
+            stringify!(BitwuzlaOptionValue),
             "::",
             stringify!(mode)
         )
