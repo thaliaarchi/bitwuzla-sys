@@ -7,4 +7,7 @@
 
 #![allow(non_upper_case_globals)]
 
+#[cfg(feature = "vendor")]
+extern crate link_cplusplus;
+
 include!("../src-generated/bindings.rs");

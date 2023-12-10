@@ -48,7 +48,6 @@ impl BitwuzlaBuild {
             self.out_dir.join("build/install/usr/local/lib").display(),
         );
         println!("cargo:rustc-link-lib=static=bitwuzla");
-        println!("cargo:rustc-link-lib=stdc++");
         println!("cargo:rustc-link-lib=gmp");
 
         self

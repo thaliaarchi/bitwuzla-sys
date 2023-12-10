@@ -15,10 +15,11 @@ repository                              = "https://github.com/fatemender/bitwuzl
 version                                 = "0.2.0"
 
 [features]
-vendor                                  = ["copy_dir"]
+vendor                                  = ["copy_dir", "link-cplusplus"]
 
 [dependencies]
 libc                                    = "0.2.73"
+link-cplusplus                          = { version = "1.0.9", optional = true }
 
 [build-dependencies]
 copy_dir                                = { version = "0.1.2", optional = true }
