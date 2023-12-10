@@ -154,30 +154,43 @@ pub const BITWUZLA_OPT_DBG_CHECK_UNSAT_CORE: BitwuzlaOption = 35;
 pub const BITWUZLA_OPT_NUM_OPTS: BitwuzlaOption = 36;
 pub type BitwuzlaOption = ::std::os::raw::c_uint;
 extern "C" {
+    #[doc = " Get copyright information."]
     pub fn bitwuzla_copyright() -> *const ::std::os::raw::c_char;
 }
 extern "C" {
+    #[doc = " Get version information."]
     pub fn bitwuzla_version() -> *const ::std::os::raw::c_char;
 }
 extern "C" {
+    #[doc = " Get git information."]
     pub fn bitwuzla_git_id() -> *const ::std::os::raw::c_char;
 }
+#[doc = " The option info struct holds all information about an option, which can\n be queried via `bitwuzla_get_option_info`.\n\n @see\n   * `bitwuzla_get_option_info`"]
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct BitwuzlaOptionInfo {
+    #[doc = " The Bitwuzla option."]
     pub opt: BitwuzlaOption,
+    #[doc = " Short option name."]
     pub shrt: *const ::std::os::raw::c_char,
+    #[doc = " Long option name."]
     pub lng: *const ::std::os::raw::c_char,
+    #[doc = " Option description."]
     pub description: *const ::std::os::raw::c_char,
+    #[doc = " Indicates whether values are numeric or strings."]
     pub is_numeric: bool,
     pub value: BitwuzlaOptionValue,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct BitwuzlaOptionNumericValue {
+    #[doc = " Current numeric option value."]
     pub cur: u64,
+    #[doc = " Default numeric option value."]
     pub dflt: u64,
+    #[doc = " Minimum numeric option value."]
     pub min: u64,
+    #[doc = " Maximum numeric option value."]
     pub max: u64,
 }
 #[test]
@@ -239,9 +252,13 @@ fn bindgen_test_layout_BitwuzlaOptionNumericValue() {
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct BitwuzlaOptionModeValue {
+    #[doc = " Current mode option value."]
     pub cur: *const ::std::os::raw::c_char,
+    #[doc = " Default mode option value."]
     pub dflt: *const ::std::os::raw::c_char,
+    #[doc = " Number of available modes."]
     pub num_modes: usize,
+    #[doc = " List of available modes."]
     pub modes: *mut *const ::std::os::raw::c_char,
 }
 #[test]
@@ -416,30 +433,37 @@ pub struct BitwuzlaOptions {
     _unused: [u8; 0],
 }
 extern "C" {
+    #[doc = " Create a new BitwuzlaOptions instance.\n\n The returned instance must be deleted via `bitwuzla_options_delete()`.\n\n @return A pointer to the created BitwuzlaOptions instance.\n\n @see\n   * `bitwuzla_options_delete`"]
     pub fn bitwuzla_options_new() -> *mut BitwuzlaOptions;
 }
 extern "C" {
+    #[doc = " Delete a BitwuzlaOptions instance.\n\n The given instance must have been created via `bitwuzla_options_new()`.\n\n @param options The BitwuzlaOptions instance to delete.\n\n @see\n   * `bitwuzla_options_new`"]
     pub fn bitwuzla_options_delete(options: *mut BitwuzlaOptions);
 }
 extern "C" {
+    #[doc = " Determine if given string is a valid short or long option name.\n @param name The name.\n @return True if given string is a option name."]
     pub fn bitwuzla_option_is_valid(
         options: *mut BitwuzlaOptions,
         name: *const ::std::os::raw::c_char,
     ) -> bool;
 }
 extern "C" {
+    #[doc = " Determine if a given option is a numeric (or Boolean) option.\n @return True if the given option is a numeric or Boolean option."]
     pub fn bitwuzla_option_is_numeric(
         options: *mut BitwuzlaOptions,
         option: BitwuzlaOption,
     ) -> bool;
 }
 extern "C" {
+    #[doc = " Determine if a given option is an option with a mode\n @return True if the given option is an option with a mode."]
     pub fn bitwuzla_option_is_mode(options: *mut BitwuzlaOptions, option: BitwuzlaOption) -> bool;
 }
 extern "C" {
+    #[doc = " Set option.\n\n @param options The Bitwuzla options instance.\n @param option The option.\n @param val The option value.\n\n @see\n   * `BitwuzlaOption`\n   * `bitwuzla_get_option`"]
     pub fn bitwuzla_set_option(options: *mut BitwuzlaOptions, option: BitwuzlaOption, val: u64);
 }
 extern "C" {
+    #[doc = " Set option mode for options with modes.\n\n @param options The Bitwuzla options instance.\n @param option The option.\n @param val The option string value.\n\n @see\n   * `BitwuzlaOption`\n   * `bitwuzla_get_option_mode`"]
     pub fn bitwuzla_set_option_mode(
         options: *mut BitwuzlaOptions,
         option: BitwuzlaOption,
@@ -447,15 +471,18 @@ extern "C" {
     );
 }
 extern "C" {
+    #[doc = " Get the current value of an option.\n\n @param options The Bitwuzla options instance.\n @param option The option.\n\n @return The option value.\n\n @see\n   * `BitwuzlaOption`"]
     pub fn bitwuzla_get_option(options: *mut BitwuzlaOptions, option: BitwuzlaOption) -> u64;
 }
 extern "C" {
+    #[doc = " Get the current mode of an option as a string if option has modes.\n\n @param options The Bitwuzla options instance.\n @param option The option.\n\n @return The option value.\n\n @see\n   * `BitwuzlaOption`\n   * `bitwuzla_set_option_mode`"]
     pub fn bitwuzla_get_option_mode(
         options: *mut BitwuzlaOptions,
         option: BitwuzlaOption,
     ) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
+    #[doc = " Get the details of an option.\n\n @param options The Bitwuzla options instance.\n @param option The option.\n @param info The option info to populate, will be valid until the next\n             `bitwuzla_get_option_info` call.\n\n @see\n   * `BitwuzlaOptionInfo`"]
     pub fn bitwuzla_get_option_info(
         options: *mut BitwuzlaOptions,
         option: BitwuzlaOption,
@@ -463,235 +490,310 @@ extern "C" {
     );
 }
 extern "C" {
+    #[doc = " Get the string representation of a result.\n @return A string representation of the given result.\n @note The returned char* pointer is only valid until the next\n       `bitwuzla_result_to_string` call."]
     pub fn bitwuzla_result_to_string(result: BitwuzlaResult) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
+    #[doc = " Get the string representation of a rounding mode.\n @return A string representation of the rounding mode.\n @note The returned char* pointer is only valid until the next\n       `bitwuzla_rm_to_string` call."]
     pub fn bitwuzla_rm_to_string(rm: BitwuzlaRoundingMode) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
+    #[doc = " Get the string representation of a term kind.\n @return A string representation of the given term kind.\n @note The returned char* pointer is only valid until the next\n       `bitwuzla_kind_to_string` call."]
     pub fn bitwuzla_kind_to_string(kind: BitwuzlaKind) -> *const ::std::os::raw::c_char;
 }
+#[doc = " A Bitwuzla sort."]
 pub type BitwuzlaSort = u64;
 extern "C" {
+    #[doc = " Compute the hash value for a sort.\n\n @param sort The sort.\n\n @return The hash value of the sort."]
     pub fn bitwuzla_sort_hash(sort: BitwuzlaSort) -> usize;
 }
 extern "C" {
+    #[doc = " Get the size of a bit-vector sort.\n\n Requires that given sort is a bit-vector sort.\n\n @param sort The sort.\n\n @return The size of the bit-vector sort."]
     pub fn bitwuzla_sort_bv_get_size(sort: BitwuzlaSort) -> u64;
 }
 extern "C" {
+    #[doc = " Get the exponent size of a floating-point sort.\n\n Requires that given sort is a floating-point sort.\n\n @param sort The sort.\n\n @return The exponent size of the floating-point sort."]
     pub fn bitwuzla_sort_fp_get_exp_size(sort: BitwuzlaSort) -> u64;
 }
 extern "C" {
+    #[doc = " Get the significand size of a floating-point sort.\n\n Requires that given sort is a floating-point sort.\n\n @param sort The sort.\n\n @return The significand size of the floating-point sort."]
     pub fn bitwuzla_sort_fp_get_sig_size(sort: BitwuzlaSort) -> u64;
 }
 extern "C" {
+    #[doc = " Get the index sort of an array sort.\n\n Requires that given sort is an array sort.\n\n @param sort The sort.\n\n @return The index sort of the array sort."]
     pub fn bitwuzla_sort_array_get_index(sort: BitwuzlaSort) -> BitwuzlaSort;
 }
 extern "C" {
+    #[doc = " Get the element sort of an array sort.\n\n Requires that given sort is an array sort.\n\n @param sort The sort.\n\n @return The element sort of the array sort."]
     pub fn bitwuzla_sort_array_get_element(sort: BitwuzlaSort) -> BitwuzlaSort;
 }
 extern "C" {
+    #[doc = " Get the domain sorts of a function sort.\n\n The domain sorts are returned as an array of sorts of size `size`.\n Requires that given sort is a function sort.\n\n @param sort The sort.\n @param size The size of the returned array.\n\n @return The domain sorts of the function sort."]
     pub fn bitwuzla_sort_fun_get_domain_sorts(
         sort: BitwuzlaSort,
         size: *mut usize,
     ) -> *mut BitwuzlaSort;
 }
 extern "C" {
+    #[doc = " Get the codomain sort of a function sort.\n\n Requires that given sort is a function sort.\n\n @param sort The sort.\n\n @return The codomain sort of the function sort."]
     pub fn bitwuzla_sort_fun_get_codomain(sort: BitwuzlaSort) -> BitwuzlaSort;
 }
 extern "C" {
+    #[doc = " Get the arity of a function sort.\n\n @param sort The sort.\n\n @return The number of arguments of the function sort."]
     pub fn bitwuzla_sort_fun_get_arity(sort: BitwuzlaSort) -> u64;
 }
 extern "C" {
+    #[doc = " Get the symbol of an uninterpreted sort.\n @param sort The sort.\n @return The symbol; NULL if no symbol is defined.\n @note The returned char* pointer is only valid until the next\n       `bitwuzla_sort_uninterpreted_get_symbol` call."]
     pub fn bitwuzla_sort_get_uninterpreted_symbol(
         sort: BitwuzlaSort,
     ) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
+    #[doc = " Determine if two sorts are equal.\n\n @param sort0 The first sort.\n @param sort1 The second sort.\n\n @return True if the given sorts are equal."]
     pub fn bitwuzla_sort_is_equal(sort0: BitwuzlaSort, sort1: BitwuzlaSort) -> bool;
 }
 extern "C" {
+    #[doc = " Determine if a sort is an array sort.\n\n @param sort The sort.\n\n @return True if `sort` is an array sort."]
     pub fn bitwuzla_sort_is_array(sort: BitwuzlaSort) -> bool;
 }
 extern "C" {
+    #[doc = " Determine if a sort is a Boolean sort.\n\n @param sort The sort.\n\n @return True if `sort` is a Boolean sort."]
     pub fn bitwuzla_sort_is_bool(sort: BitwuzlaSort) -> bool;
 }
 extern "C" {
+    #[doc = " Determine if a sort is a bit-vector sort.\n\n @param sort The sort.\n\n @return True if `sort` is a bit-vector sort."]
     pub fn bitwuzla_sort_is_bv(sort: BitwuzlaSort) -> bool;
 }
 extern "C" {
+    #[doc = " Determine if a sort is a floating-point sort.\n\n @param sort The sort.\n\n @return True if `sort` is a floating-point sort."]
     pub fn bitwuzla_sort_is_fp(sort: BitwuzlaSort) -> bool;
 }
 extern "C" {
+    #[doc = " Determine if a sort is a function sort.\n\n @param sort The sort.\n\n @return True if `sort` is a function sort."]
     pub fn bitwuzla_sort_is_fun(sort: BitwuzlaSort) -> bool;
 }
 extern "C" {
+    #[doc = " Determine if a sort is a Roundingmode sort.\n\n @param sort The sort.\n\n @return True if `sort` is a Roundingmode sort."]
     pub fn bitwuzla_sort_is_rm(sort: BitwuzlaSort) -> bool;
 }
 extern "C" {
+    #[doc = " Determine if a sort is an uninterpreted sort.\n\n @param sort The sort.\n\n @return True if `sort` is a uninterpreted sort."]
     pub fn bitwuzla_sort_is_uninterpreted(sort: BitwuzlaSort) -> bool;
 }
 extern "C" {
+    #[doc = " Get the SMT-LIBV v2 string representation of a sort.\n @return A string representation of the given sort.\n @note The returned char* pointer is only valid until the next\n       `bitwuzla_sort_to_string` call."]
     pub fn bitwuzla_sort_to_string(sort: BitwuzlaSort) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
+    #[doc = " Print sort to given file in SMT-LIB v2 format.\n\n @param sort The sort.\n @param file The file to print the sort to."]
     pub fn bitwuzla_sort_print(sort: BitwuzlaSort, file: *mut FILE);
 }
+#[doc = " A Bitwuzla term."]
 pub type BitwuzlaTerm = u64;
 extern "C" {
+    #[doc = " Compute the hash value for a term.\n\n @param term The term.\n\n @return The hash value of the term."]
     pub fn bitwuzla_term_hash(term: BitwuzlaTerm) -> usize;
 }
 extern "C" {
+    #[doc = " Get the kind of a term.\n\n @param term The term.\n\n @return The kind of the given term.\n\n @see BitwuzlaKind"]
     pub fn bitwuzla_term_get_kind(term: BitwuzlaTerm) -> BitwuzlaKind;
 }
 extern "C" {
+    #[doc = " Get the child terms of a term.\n\n Returns \\c NULL if given term does not have children.\n\n @param term The term.\n @param size Output parameter, stores the number of children of `term`.\n\n @return The children of `term` as an array of terms."]
     pub fn bitwuzla_term_get_children(term: BitwuzlaTerm, size: *mut usize) -> *mut BitwuzlaTerm;
 }
 extern "C" {
+    #[doc = " Get the indices of an indexed term.\n\n Requires that given term is an indexed term.\n\n @param term The term.\n @param size Output parameter, stores the number of indices of `term`.\n\n @return The indices of `term` as an array of indices."]
     pub fn bitwuzla_term_get_indices(term: BitwuzlaTerm, size: *mut usize) -> *mut u64;
 }
 extern "C" {
+    #[doc = " Determine if a term is an indexed term.\n\n @param term The term.\n\n @return True if `term` is an indexed term."]
     pub fn bitwuzla_term_is_indexed(term: BitwuzlaTerm) -> bool;
 }
 extern "C" {
+    #[doc = " Get the sort of a term.\n\n @param term The term.\n\n @return The sort of the term."]
     pub fn bitwuzla_term_get_sort(term: BitwuzlaTerm) -> BitwuzlaSort;
 }
 extern "C" {
+    #[doc = " Get the index sort of an array term.\n\n Requires that given term is an array or an array store term.\n\n @param term The term.\n\n @return The index sort of the array term."]
     pub fn bitwuzla_term_array_get_index_sort(term: BitwuzlaTerm) -> BitwuzlaSort;
 }
 extern "C" {
+    #[doc = " Get the element sort of an array term.\n\n Requires that given term is an array or an array store term.\n\n @param term The term.\n\n @return The element sort of the array term."]
     pub fn bitwuzla_term_array_get_element_sort(term: BitwuzlaTerm) -> BitwuzlaSort;
 }
 extern "C" {
+    #[doc = " Get the domain sorts of a function term.\n\n The domain sorts are returned as an array of sorts of size `size.\n Requires that given term is an uninterpreted function, a lambda term, an\n array store term, or an ite term over function terms.\n\n @param term The term.\n @param size The size of the returned array. Optional, NULL is allowed.\n\n @return The domain sorts of the function term."]
     pub fn bitwuzla_term_fun_get_domain_sorts(
         term: BitwuzlaTerm,
         size: *mut usize,
     ) -> *mut BitwuzlaSort;
 }
 extern "C" {
+    #[doc = " Get the codomain sort of a function term.\n\n Requires that given term is an uninterpreted function, a lambda term, an\n array store term, or an ite term over function terms.\n\n @param term The term.\n\n @return The codomain sort of the function term."]
     pub fn bitwuzla_term_fun_get_codomain_sort(term: BitwuzlaTerm) -> BitwuzlaSort;
 }
 extern "C" {
+    #[doc = " Get the bit-width of a bit-vector term.\n\n Requires that given term is a bit-vector term.\n\n @param term The term.\n\n @return The bit-width of the bit-vector term."]
     pub fn bitwuzla_term_bv_get_size(term: BitwuzlaTerm) -> u64;
 }
 extern "C" {
+    #[doc = " Get the bit-width of the exponent of a floating-point term.\n\n Requires that given term is a floating-point term.\n\n @param term The term.\n\n @return The bit-width of the exponent of the floating-point term."]
     pub fn bitwuzla_term_fp_get_exp_size(term: BitwuzlaTerm) -> u64;
 }
 extern "C" {
+    #[doc = " Get the bit-width of the significand of a floating-point term.\n\n Requires that given term is a floating-point term.\n\n @param term The term.\n\n @return The bit-width of the significand of the floating-point term."]
     pub fn bitwuzla_term_fp_get_sig_size(term: BitwuzlaTerm) -> u64;
 }
 extern "C" {
+    #[doc = " Get the arity of a function term.\n\n Requires that given term is a function term.\n\n @param term The term.\n\n @return The arity of the function term."]
     pub fn bitwuzla_term_fun_get_arity(term: BitwuzlaTerm) -> u64;
 }
 extern "C" {
+    #[doc = " Get the symbol of a term.\n\n @param term The term.\n\n @return The symbol of `term`. \\c NULL if no symbol is defined."]
     pub fn bitwuzla_term_get_symbol(term: BitwuzlaTerm) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
+    #[doc = " Determine if the sorts of two terms are equal.\n\n @param term0 The first term.\n @param term1 The second term.\n\n @return True if the sorts of `term0` and `term1` are equal."]
     pub fn bitwuzla_term_is_equal_sort(term0: BitwuzlaTerm, term1: BitwuzlaTerm) -> bool;
 }
 extern "C" {
+    #[doc = " Determine if a term is an array term.\n\n @param term The term.\n\n @return True if `term` is an array term."]
     pub fn bitwuzla_term_is_array(term: BitwuzlaTerm) -> bool;
 }
 extern "C" {
+    #[doc = " Determine if a term is a constant.\n\n @param term The term.\n\n @return True if `term` is a constant."]
     pub fn bitwuzla_term_is_const(term: BitwuzlaTerm) -> bool;
 }
 extern "C" {
+    #[doc = " Determine if a term is a function.\n\n @param term The term.\n\n @return True if `term` is a function."]
     pub fn bitwuzla_term_is_fun(term: BitwuzlaTerm) -> bool;
 }
 extern "C" {
+    #[doc = " Determine if a term is a variable.\n\n @param term The term.\n\n @return True if `term` is a variable."]
     pub fn bitwuzla_term_is_var(term: BitwuzlaTerm) -> bool;
 }
 extern "C" {
+    #[doc = " Determine if a term is a value.\n\n @param term The term.\n\n @return True if `term` is a value."]
     pub fn bitwuzla_term_is_value(term: BitwuzlaTerm) -> bool;
 }
 extern "C" {
+    #[doc = " Determine if a term is a bit-vector value.\n\n @param term The term.\n\n @return True if `term` is a bit-vector value."]
     pub fn bitwuzla_term_is_bv_value(term: BitwuzlaTerm) -> bool;
 }
 extern "C" {
+    #[doc = " Determine if a term is a floating-point value.\n\n @param term The term.\n\n @return True if `term` is a floating-point value."]
     pub fn bitwuzla_term_is_fp_value(term: BitwuzlaTerm) -> bool;
 }
 extern "C" {
+    #[doc = " Determine if a term is a rounding mode value.\n\n @param term The term.\n\n @return True if `term` is a rounding mode value."]
     pub fn bitwuzla_term_is_rm_value(term: BitwuzlaTerm) -> bool;
 }
 extern "C" {
+    #[doc = " Determine if a term is a Boolean term.\n\n @param term The term.\n\n @return True if `term` is a Boolean term."]
     pub fn bitwuzla_term_is_bool(term: BitwuzlaTerm) -> bool;
 }
 extern "C" {
+    #[doc = " Determine if a term is a bit-vector term.\n\n @param term The term.\n\n @return True if `term` is a bit-vector term."]
     pub fn bitwuzla_term_is_bv(term: BitwuzlaTerm) -> bool;
 }
 extern "C" {
+    #[doc = " Determine if a term is a floating-point term.\n\n @param term The term.\n\n @return True if `term` is a floating-point term."]
     pub fn bitwuzla_term_is_fp(term: BitwuzlaTerm) -> bool;
 }
 extern "C" {
+    #[doc = " Determine if a term is a rounding mode term.\n\n @param term The term.\n\n @return True if `term` is a rounding mode term."]
     pub fn bitwuzla_term_is_rm(term: BitwuzlaTerm) -> bool;
 }
 extern "C" {
+    #[doc = " Determine if a term is a term of uninterpreted sort.\n\n @param term The term.\n\n @return True if `term` is a term of uninterpreted sort."]
     pub fn bitwuzla_term_is_uninterpreted(term: BitwuzlaTerm) -> bool;
 }
 extern "C" {
+    #[doc = " Determine if a term is Boolean value true.\n\n @param term The term.\n\n @return True if `term` is a Boolean value true."]
     pub fn bitwuzla_term_is_true(term: BitwuzlaTerm) -> bool;
 }
 extern "C" {
+    #[doc = " Determine if a term is Boolean value false.\n\n @param term The term.\n\n @return false if `term` is a Boolean value false."]
     pub fn bitwuzla_term_is_false(term: BitwuzlaTerm) -> bool;
 }
 extern "C" {
+    #[doc = " Determine if a term is a bit-vector value representing zero.\n\n @param term The term.\n\n @return True if `term` is a bit-vector zero value."]
     pub fn bitwuzla_term_is_bv_value_zero(term: BitwuzlaTerm) -> bool;
 }
 extern "C" {
+    #[doc = " Determine if a term is a bit-vector value representing one.\n\n @param term The term.\n\n @return True if `term` is a bit-vector one value."]
     pub fn bitwuzla_term_is_bv_value_one(term: BitwuzlaTerm) -> bool;
 }
 extern "C" {
+    #[doc = " Determine if a term is a bit-vector value with all bits set to one.\n\n @param term The term.\n\n @return True if `term` is a bit-vector value with all bits set to one."]
     pub fn bitwuzla_term_is_bv_value_ones(term: BitwuzlaTerm) -> bool;
 }
 extern "C" {
+    #[doc = " Determine if a term is a bit-vector minimum signed value.\n\n @param term The term.\n\n @return True if `term` is a bit-vector value with the most significant bit\n         set to 1 and all other bits set to 0."]
     pub fn bitwuzla_term_is_bv_value_min_signed(term: BitwuzlaTerm) -> bool;
 }
 extern "C" {
+    #[doc = " Determine if a term is a bit-vector maximum signed value.\n\n @param term The term.\n\n @return True if `term` is a bit-vector value with the most significant bit\n         set to 0 and all other bits set to 1."]
     pub fn bitwuzla_term_is_bv_value_max_signed(term: BitwuzlaTerm) -> bool;
 }
 extern "C" {
+    #[doc = " Determine if a term is a floating-point positive zero (+zero) value.\n\n @param term The term.\n\n @return True if `term` is a floating-point +zero value."]
     pub fn bitwuzla_term_is_fp_value_pos_zero(term: BitwuzlaTerm) -> bool;
 }
 extern "C" {
+    #[doc = " Determine if a term is a floating-point value negative zero (-zero).\n\n @param term The term.\n\n @return True if `term` is a floating-point value negative zero."]
     pub fn bitwuzla_term_is_fp_value_neg_zero(term: BitwuzlaTerm) -> bool;
 }
 extern "C" {
+    #[doc = " Determine if a term is a floating-point positive infinity (+oo) value.\n\n @param term The term.\n\n @return True if `term` is a floating-point +oo value."]
     pub fn bitwuzla_term_is_fp_value_pos_inf(term: BitwuzlaTerm) -> bool;
 }
 extern "C" {
+    #[doc = " Determine if a term is a floating-point negative infinity (-oo) value.\n\n @param term The term.\n\n @return True if `term` is a floating-point -oo value."]
     pub fn bitwuzla_term_is_fp_value_neg_inf(term: BitwuzlaTerm) -> bool;
 }
 extern "C" {
+    #[doc = " Determine if a term is a floating-point NaN value.\n\n @param term The term.\n\n @return True if `term` is a floating-point NaN value."]
     pub fn bitwuzla_term_is_fp_value_nan(term: BitwuzlaTerm) -> bool;
 }
 extern "C" {
+    #[doc = " Determine if a term is a rounding mode RNA value.\n\n @param term The term.\n\n @return True if `term` is a roundindg mode RNA value."]
     pub fn bitwuzla_term_is_rm_value_rna(term: BitwuzlaTerm) -> bool;
 }
 extern "C" {
+    #[doc = " Determine if a term is a rounding mode RNE value.\n\n @param term The term.\n\n @return True if `term` is a rounding mode RNE value."]
     pub fn bitwuzla_term_is_rm_value_rne(term: BitwuzlaTerm) -> bool;
 }
 extern "C" {
+    #[doc = " Determine if a term is a rounding mode RTN value.\n\n @param term The term.\n\n @return True if `term` is a rounding mode RTN value."]
     pub fn bitwuzla_term_is_rm_value_rtn(term: BitwuzlaTerm) -> bool;
 }
 extern "C" {
+    #[doc = " Determine if a term is a rounding mode RTP value.\n\n @param term The term.\n\n @return True if `term` is a rounding mode RTP value."]
     pub fn bitwuzla_term_is_rm_value_rtp(term: BitwuzlaTerm) -> bool;
 }
 extern "C" {
+    #[doc = " Determine if a term is a rounding mode RTZ value.\n\n @param term The term.\n\n @return True if `term` is a rounding mode RTZ value."]
     pub fn bitwuzla_term_is_rm_value_rtz(term: BitwuzlaTerm) -> bool;
 }
 extern "C" {
+    #[doc = " Get Boolean representation of given Boolean value term.\n\n @param term The Boolean value term.\n @return Boolean representation of value term."]
     pub fn bitwuzla_term_value_get_bool(term: BitwuzlaTerm) -> bool;
 }
 extern "C" {
+    #[doc = " Get string representation of Boolean, bit-vector, floating-point, or\n rounding mode value term.\n\n This returns the raw value string (as opposed to bitwuzla_term_to_string(),\n which returns the SMT-LIB v2 representation of a term).\n For example, this function returns \"010\" for a bit-vector value 2 of size\n 3, while bitwuzla_term_to_string() returns \"#b010\".\n\n @note This uses default binary format for bit-vector value strings.\n\n @param term The value term.\n @return The string representation of the value term.\n\n @note Return value is valid until next `bitwuzla_term_value_get_str` call."]
     pub fn bitwuzla_term_value_get_str(term: BitwuzlaTerm) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
+    #[doc = " Get string representation of Boolean, bit-vector, floating-point, or\n rounding mode value term. String representations of bit-vector values are\n printed in the given base.\n\n This returns the raw value string (as opposed to bitwuzla_term_to_string(),\n which returns the SMT-LIB v2 representation of a term).\n For example, this function returns \"010\" for a bit-vector value 2 of size\n 3, while bitwuzla_term_to_string() returns \"#b010\".\n\n @param term The value term.\n @param base The base of the string representation of bit-vector values; `2`\n             for binary, `10` for decimal, and `16` for hexadecimal. Always\n             ignored for Boolean and RoundingMode values.\n @return String representation of the value term.\n\n @note The returned string for floating-point values is always the binary\n       IEEE-754 representation of the value (parameter `base` is ignored).\n       Parameter `base` always configures the numeric base for bit-vector\n       values, and for floating-point values in case of the tuple of strings\n       instantiation. It is always ignored for Boolean and RoundingMode\n       values.\n\n @note Return value is valid until next `bitwuzla_term_value_get_str_fmt`\n       call."]
     pub fn bitwuzla_term_value_get_str_fmt(
         term: BitwuzlaTerm,
         base: u8,
     ) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
+    #[doc = " Get (the raw) string representation of a given floating-point value\n term in IEEE 754 standard representation.\n\n @param term        The floating-point value term.\n @param sign        Output parameter. String representation of the\n                    sign bit.\n @param exponent    Output parameter. String representation of the exponent\n                    bit-vector value.\n @param significand Output parameter. String representation of the\n                    significand bit-vector value.\n @param base        The base in which the component bit-vector strings are\n                    given; `2` for binary, `10` for decimal, and `16` for\n                    hexadecimal.\n\n @note Return values sign, exponent and significand are valid until next\n       `bitwuzla_term_value_get_fp_ieee` call."]
     pub fn bitwuzla_term_value_get_fp_ieee(
         term: BitwuzlaTerm,
         sign: *mut *const ::std::os::raw::c_char,
@@ -701,21 +803,26 @@ extern "C" {
     );
 }
 extern "C" {
+    #[doc = " Get representation of given rounding mode value term.\n @param term The rounding mode value term.\n @return The BitwuzlaRoundingMode representation of the given rounding mode\n         value."]
     pub fn bitwuzla_term_value_get_rm(term: BitwuzlaTerm) -> BitwuzlaRoundingMode;
 }
 extern "C" {
+    #[doc = " Get the SMT-LIB v2 string representation of a term.\n @note This uses default binary format for bit-vector value strings.\n @return A string representation of the given term.\n @note The returned char* pointer is only valid until the next\n       `bitwuzla_term_to_string` call."]
     pub fn bitwuzla_term_to_string(term: BitwuzlaTerm) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
+    #[doc = " Get the SMT-LIB v2 string representation of a term. String representations\n of bit-vector values are printed in the given base.\n @param base The base of the string representation of bit-vector values; `2`\n             for binary, `10` for decimal, and `16` for hexadecimal. Always\n             ignored for Boolean and RoundingMode values.\n @return     A string representation of the given term.\n\n @note The returned char* pointer is only valid until the next\n       `bitwuzla_term_to_string` call."]
     pub fn bitwuzla_term_to_string_fmt(
         term: BitwuzlaTerm,
         base: u8,
     ) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
+    #[doc = " Print term in SMT-LIB v2 format.\n @note This uses default binary format for bit-vector value strings.\n @param term  The term.\n @param file  The file to print the term to."]
     pub fn bitwuzla_term_print(term: BitwuzlaTerm, file: *mut FILE);
 }
 extern "C" {
+    #[doc = " Print term in SMT-LIB v2 format.\n @param term  The term.\n @param file  The file to print the term to.\n @param base The base of the string representation of bit-vector values; `2`\n             for binary, `10` for decimal, and `16` for hexadecimal.\n\n @note Floating-point values are printed in terms of operator `fp`. Their\n       component bit-vector values can only be printed in binary or decimal\n       format. If base `16` is configured, the format for floating-point\n       component bit-vector values defaults to binary format."]
     pub fn bitwuzla_term_print_fmt(term: BitwuzlaTerm, file: *mut FILE, base: u8);
 }
 #[repr(C)]
@@ -724,12 +831,15 @@ pub struct Bitwuzla {
     _unused: [u8; 0],
 }
 extern "C" {
+    #[doc = " Create a new Bitwuzla instance.\n\n The returned instance must be deleted via `bitwuzla_delete()`.\n\n @param options The associated options (optional).\n @return A pointer to the created Bitwuzla instance.\n\n @see\n   * `bitwuzla_delete`"]
     pub fn bitwuzla_new(options: *const BitwuzlaOptions) -> *mut Bitwuzla;
 }
 extern "C" {
+    #[doc = " Delete a Bitwuzla instance.\n\n The given instance must have been created via `bitwuzla_new()`.\n\n @param bitwuzla The Bitwuzla instance to delete.\n\n @see\n   * `bitwuzla_new`"]
     pub fn bitwuzla_delete(bitwuzla: *mut Bitwuzla);
 }
 extern "C" {
+    #[doc = " Configure a termination callback function.\n\n The `state` of the callback can be retrieved via\n `bitwuzla_get_termination_callback_state()`.\n\n @param bitwuzla The Bitwuzla instance.\n @param fun The callback function, returns a value != 0 if `bitwuzla` should\n            be terminated.\n @param state The argument to the callback function.\n\n @see\n   * `bitwuzla_terminate`\n   * `bitwuzla_get_termination_callback_state`"]
     pub fn bitwuzla_set_termination_callback(
         bitwuzla: *mut Bitwuzla,
         fun: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void) -> i32>,
@@ -737,46 +847,58 @@ extern "C" {
     );
 }
 extern "C" {
+    #[doc = " Get the state of the termination callback function.\n\n The returned object representing the state of the callback corresponds to\n the `state` configured as argument to the callback function via\n `bitwuzla_set_termination_callback()`.\n\n @param bitwuzla The Bitwuzla instance.\n\n @return The object passed as argument `state` to the callback function.\n\n @see\n   * `bitwuzla_terminate`\n   * `bitwuzla_set_termination_callback`"]
     pub fn bitwuzla_get_termination_callback_state(
         bitwuzla: *mut Bitwuzla,
     ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
+    #[doc = " Configure an abort callback function, which is called instead of exit\n on abort conditions.\n\n @note If the abort callback function throws a C++ exception, this must be\n       thrown via std::rethrow_if_nested.\n\n @param fun The callback function. Argument `msg` explains the reason for the\n            abort."]
     pub fn bitwuzla_set_abort_callback(
         fun: ::std::option::Option<unsafe extern "C" fn(msg: *const ::std::os::raw::c_char)>,
     );
 }
 extern "C" {
+    #[doc = " Push context levels.\n\n @param bitwuzla The Bitwuzla instance.\n @param nlevels The number of context levels to push.\n\n @see\n   * `bitwuzla_set_option`"]
     pub fn bitwuzla_push(bitwuzla: *mut Bitwuzla, nlevels: u64);
 }
 extern "C" {
+    #[doc = " Pop context levels.\n\n @param bitwuzla The Bitwuzla instance.\n @param nlevels The number of context levels to pop.\n\n @see\n   * `bitwuzla_set_option`"]
     pub fn bitwuzla_pop(bitwuzla: *mut Bitwuzla, nlevels: u64);
 }
 extern "C" {
+    #[doc = " Assert formula.\n\n @param bitwuzla The Bitwuzla instance.\n @param term The formula to assert."]
     pub fn bitwuzla_assert(bitwuzla: *mut Bitwuzla, term: BitwuzlaTerm);
 }
 extern "C" {
+    #[doc = " Get the set of currently asserted formulas.\n @return The asserted formulas.\n @return An array with the set of asserted formulas of size `size`. Only\n         valid until the next `bitwuzla_get_assertions` call."]
     pub fn bitwuzla_get_assertions(bitwuzla: *mut Bitwuzla, size: *mut usize) -> *mut BitwuzlaTerm;
 }
 extern "C" {
+    #[doc = " Determine if an assumption is an unsat assumption.\n\n Unsat assumptions are assumptions that force an input formula to become\n unsatisfiable. Unsat assumptions handling in Bitwuzla is analogous to\n failed assumptions in MiniSAT.\n\n Requires that the last `bitwuzla_check_sat()` query returned\n `::BITWUZLA_UNSAT`.\n\n @param bitwuzla The Bitwuzla instance.\n @param term The assumption to check for.\n\n @return True if given assumption is an unsat assumption.\n\n @see\n   * `bitwuzla_set_option`\n   * `bitwuzla_check_sat`"]
     pub fn bitwuzla_is_unsat_assumption(bitwuzla: *mut Bitwuzla, term: BitwuzlaTerm) -> bool;
 }
 extern "C" {
+    #[doc = " Get the set of unsat assumptions.\n\n Unsat assumptions are assumptions that force an input formula to become\n unsatisfiable. Unsat assumptions handling in Bitwuzla is analogous to\n failed assumptions in MiniSAT.\n\n Requires that the last `bitwuzla_check_sat()` query returned\n `::BITWUZLA_UNSAT`.\n\n @param bitwuzla The Bitwuzla instance.\n @param size Output parameter, stores the size of the returned array.\n\n @return An array with unsat assumptions of size `size`. Only valid until\n         the next `bitwuzla_get_unsat_assumptions` call.\n\n @see\n   * `bitwuzla_set_option`\n   * `bitwuzla_check_sat`"]
     pub fn bitwuzla_get_unsat_assumptions(
         bitwuzla: *mut Bitwuzla,
         size: *mut usize,
     ) -> *mut BitwuzlaTerm;
 }
 extern "C" {
+    #[doc = " Get the unsat core (unsat assertions).\n\n The unsat core consists of the set of assertions that force an input formula\n to become unsatisfiable.\n\n Requires that the last `bitwuzla_check_sat()` query returned\n `::BITWUZLA_UNSAT`.\n\n @param bitwuzla The Bitwuzla instance.\n @param size Output parameter, stores the size of the returned array.\n\n @return An array with unsat assertions of size `size`. Only valid until\n         the next `bitwuzla_get_unsat_core` call.\n\n @see\n   * `bitwuzla_assert`\n   * `bitwuzla_check_sat`"]
     pub fn bitwuzla_get_unsat_core(bitwuzla: *mut Bitwuzla, size: *mut usize) -> *mut BitwuzlaTerm;
 }
 extern "C" {
+    #[doc = " Simplify the current input formula.\n\n @param bitwuzla The Bitwuzla instance.\n\n @note Each call to `bitwuzla_check_sat()` and `bitwuzla_check_sat_assuming()`\n       simplifies the input formula as a preprocessing step. It is not\n       necessary to call this function explicitly in the general case.\n\n @see\n   * `bitwuzla_assert`"]
     pub fn bitwuzla_simplify(bitwuzla: *mut Bitwuzla);
 }
 extern "C" {
+    #[doc = " Check satisfiability of current input formula.\n\n An input formula consists of assertions added via `bitwuzla_assert()`.\n The search for a solution can by guided by additionally making assumptions\n (see `bitwuzla_check_sat_assuming`).\n\n @note Assertions and assumptions are combined via Boolean and.\n\n @param bitwuzla The Bitwuzla instance.\n\n @return `::BITWUZLA_SAT` if the input formula is satisfiable and\n         `::BITWUZLA_UNSAT` if it is unsatisfiable, and `::BITWUZLA_UNKNOWN`\n         when neither satisfiability nor unsatisfiability was determined.\n         This can happen when `bitwuzla` was terminated via a termination\n         callback.\n\n @see\n   * `bitwuzla_assert`\n   * `bitwuzla_set_option`\n   * `BitwuzlaResult`"]
     pub fn bitwuzla_check_sat(bitwuzla: *mut Bitwuzla) -> BitwuzlaResult;
 }
 extern "C" {
+    #[doc = " Check satisfiability of current input formula wrt to the given set of\n assumptions.\n\n An input formula consists of assertions added via `bitwuzla_assert()`.\n The search for a solution can by guided by additionally making assumptions\n (the given set of assumptions `args`).\n\n @note Assertions and assumptions are combined via Boolean and.\n\n @param bitwuzla The Bitwuzla instance.\n @param argc     The number of assumptions in `args`.\n @param args     The assumptions.\n\n @return `::BITWUZLA_SAT` if the input formula is satisfiable and\n         `::BITWUZLA_UNSAT` if it is unsatisfiable, and `::BITWUZLA_UNKNOWN`\n         when neither satisfiability nor unsatisfiability was determined.\n         This can happen when `bitwuzla` was terminated via a termination\n         callback.\n\n @see\n   * `bitwuzla_assert`\n   * `bitwuzla_set_option`\n   * `BitwuzlaResult`"]
     pub fn bitwuzla_check_sat_assuming(
         bitwuzla: *mut Bitwuzla,
         argc: u32,
@@ -784,9 +906,11 @@ extern "C" {
     ) -> BitwuzlaResult;
 }
 extern "C" {
+    #[doc = " Get a term representing the model value of a given term.\n\n Requires that the last `bitwuzla_check_sat()` query returned\n `::BITWUZLA_SAT`.\n\n @param bitwuzla The Bitwuzla instance.\n @param term The term to query a model value for.\n\n @return A term representing the model value of term `term`.\n\n @see `bitwuzla_check_sat`"]
     pub fn bitwuzla_get_value(bitwuzla: *mut Bitwuzla, term: BitwuzlaTerm) -> BitwuzlaTerm;
 }
 extern "C" {
+    #[doc = " Print the current input formula.\n\n @param bitwuzla The Bitwuzla instance.\n @param format The output format for printing the formula. Currently, only\n               `\"smt2\"` for the SMT-LIB v2 format is supported.\n @param file   The file to print the formula to.\n @param base   The base of the string representation of bit-vector values;\n               `2` for binary, `10` for decimal, and `16` for hexadecimal.\n\n @note Floating-point values are printed in terms of operator `fp`. Their\n       component bit-vector values can only be printed in binary or decimal\n       format. If base `16` is configured, the format for floating-point\n       component bit-vector values defaults to binary format."]
     pub fn bitwuzla_print_formula(
         bitwuzla: *mut Bitwuzla,
         format: *const ::std::os::raw::c_char,
@@ -795,6 +919,7 @@ extern "C" {
     );
 }
 extern "C" {
+    #[doc = " Get current statistics.\n\n The statistics are retrieved as a mapping from statistic name (`keys`)\n to statistic value (`values`).\n\n @param bitwuzla The Bitwuzla instance.\n @param keys     The resulting set of statistic names.\n @param values   The resulting set of statistic values.\n @param size     The resulting size of `keys` and `values`.\n\n @note Output parameters `keys` and `values` are only valid until the\n       next call to `bitwuzla_get_statistics()`."]
     pub fn bitwuzla_get_statistics(
         bitwuzla: *mut Bitwuzla,
         keys: *mut *mut *const ::std::os::raw::c_char,
@@ -803,18 +928,23 @@ extern "C" {
     );
 }
 extern "C" {
+    #[doc = " Create an array sort.\n\n @param index The index sort of the array sort.\n @param element The element sort of the array sort.\n @return An array sort which maps sort `index` to sort `element`.\n\n @see\n   * `bitwuzla_sort_is_array`\n   * `bitwuzla_sort_array_get_index`\n   * `bitwuzla_sort_array_get_element`\n   * `bitwuzla_term_is_array`\n   * `bitwuzla_term_array_get_index_sort`\n   * `bitwuzla_term_array_get_element_sort`"]
     pub fn bitwuzla_mk_array_sort(index: BitwuzlaSort, element: BitwuzlaSort) -> BitwuzlaSort;
 }
 extern "C" {
+    #[doc = " Create a Boolean sort.\n @return A Boolean sort."]
     pub fn bitwuzla_mk_bool_sort() -> BitwuzlaSort;
 }
 extern "C" {
+    #[doc = " Create a bit-vector sort of given size.\n\n @param size The size of the bit-vector sort.\n @return A bit-vector sort of given size.\n\n @see\n   * `bitwuzla_sort_is_bv`\n   * `bitwuzla_sort_bv_get_size`\n   * `bitwuzla_term_is_bv`\n   * `bitwuzla_term_bv_get_size`"]
     pub fn bitwuzla_mk_bv_sort(size: u64) -> BitwuzlaSort;
 }
 extern "C" {
+    #[doc = " Create a floating-point sort of given exponent and significand size.\n\n @param exp_size The size of the exponent.\n @param sig_size The size of the significand (including sign bit).\n @return A floating-point sort of given format.\n\n @see\n   * `bitwuzla_sort_is_fp`\n   * `bitwuzla_sort_fp_get_exp_size`\n   * `bitwuzla_sort_fp_get_sig_size`\n   * `bitwuzla_term_is_fp`\n   * `bitwuzla_term_fp_get_exp_size`\n   * `bitwuzla_term_fp_get_sig_size`"]
     pub fn bitwuzla_mk_fp_sort(exp_size: u64, sig_size: u64) -> BitwuzlaSort;
 }
 extern "C" {
+    #[doc = " Create a function sort.\n\n @param arity The number of arguments to the function.\n @param domain The domain sorts (the sorts of the arguments). The number of\n               sorts in this vector must match `arity`.\n @param codomain The codomain sort (the sort of the return value).\n @return A function sort of given domain and codomain sorts.\n\n @see\n   * `bitwuzla_sort_is_fun`\n   * `bitwuzla_sort_fun_get_arity`\n   * `bitwuzla_sort_fun_get_domain_sorts`\n   * `bitwuzla_sort_fun_get_codomain`\n   * `bitwuzla_term_is_fun`\n   * `bitwuzla_term_fun_get_arity`\n   * `bitwuzla_term_fun_get_domain_sorts`\n   * `bitwuzla_term_fun_get_codomain_sort`"]
     pub fn bitwuzla_mk_fun_sort(
         arity: u64,
         domain: *mut BitwuzlaSort,
@@ -822,48 +952,63 @@ extern "C" {
     ) -> BitwuzlaSort;
 }
 extern "C" {
+    #[doc = " Create a Roundingmode sort.\n @return A Roundingmode sort.\n @see\n   * `bitwuzla_sort_is_rm`\n   * `bitwuzla_term_is_rm`"]
     pub fn bitwuzla_mk_rm_sort() -> BitwuzlaSort;
 }
 extern "C" {
+    #[doc = " Create an uninterpreted sort.\n @param symbol The symbol of the sort. May be NULL.\n @return A uninterpreted sort.\n @see\n   * `bitwuzla_sort_is_uninterpreted`\n   * `bitwuzla_term_is_uninterpreted`"]
     pub fn bitwuzla_mk_uninterpreted_sort(symbol: *const ::std::os::raw::c_char) -> BitwuzlaSort;
 }
 extern "C" {
+    #[doc = " Create a true value.\n @return A term representing true."]
     pub fn bitwuzla_mk_true() -> BitwuzlaTerm;
 }
 extern "C" {
+    #[doc = " Create a false value.\n @return A term representing false."]
     pub fn bitwuzla_mk_false() -> BitwuzlaTerm;
 }
 extern "C" {
+    #[doc = " Create a bit-vector value zero.\n\n @param sort The sort of the value.\n @return A term representing the bit-vector value 0 of given sort.\n\n @see\n   * `bitwuzla_mk_bv_sort`"]
     pub fn bitwuzla_mk_bv_zero(sort: BitwuzlaSort) -> BitwuzlaTerm;
 }
 extern "C" {
+    #[doc = " Create a bit-vector value one.\n\n @param sort The sort of the value.\n @return A term representing the bit-vector value 1 of given sort.\n\n @see\n   * `bitwuzla_mk_bv_sort`"]
     pub fn bitwuzla_mk_bv_one(sort: BitwuzlaSort) -> BitwuzlaTerm;
 }
 extern "C" {
+    #[doc = " Create a bit-vector value where all bits are set to 1.\n\n @param sort The sort of the value.\n @return A term representing the bit-vector value of given sort\n         where all bits are set to 1.\n @see\n   * `bitwuzla_mk_bv_sort`"]
     pub fn bitwuzla_mk_bv_ones(sort: BitwuzlaSort) -> BitwuzlaTerm;
 }
 extern "C" {
+    #[doc = " Create a bit-vector minimum signed value.\n\n @param sort The sort of the value.\n @return A term representing the bit-vector value of given sort where the MSB\n         is set to 1 and all remaining bits are set to 0.\n @see\n   * `bitwuzla_mk_bv_sort`"]
     pub fn bitwuzla_mk_bv_min_signed(sort: BitwuzlaSort) -> BitwuzlaTerm;
 }
 extern "C" {
+    #[doc = " Create a bit-vector maximum signed value.\n\n @param sort The sort of the value.\n @return A term representing the bit-vector value of given sort where the MSB\n         is set to 0 and all remaining bits are set to 1.\n @see\n   * `bitwuzla_mk_bv_sort`"]
     pub fn bitwuzla_mk_bv_max_signed(sort: BitwuzlaSort) -> BitwuzlaTerm;
 }
 extern "C" {
+    #[doc = " Create a floating-point positive zero value (SMT-LIB: `+zero`).\n\n @param sort The sort of the value.\n @return A term representing the floating-point positive zero value of given\n         floating-point sort.\n @see\n  * `bitwuzla_mk_fp_sort`"]
     pub fn bitwuzla_mk_fp_pos_zero(sort: BitwuzlaSort) -> BitwuzlaTerm;
 }
 extern "C" {
+    #[doc = " Create a floating-point negative zero value (SMT-LIB: `-zero`).\n\n @param sort The sort of the value.\n @return A term representing the floating-point negative zero value of given\n         floating-point sort.\n @see\n   * `bitwuzla_mk_fp_sort`"]
     pub fn bitwuzla_mk_fp_neg_zero(sort: BitwuzlaSort) -> BitwuzlaTerm;
 }
 extern "C" {
+    #[doc = " Create a floating-point positive infinity value (SMT-LIB: `+oo`).\n\n @param sort The sort of the value.\n @return A term representing the floating-point positive infinity value of\n         given floating-point sort.\n @see\n   * `bitwuzla_mk_fp_sort`"]
     pub fn bitwuzla_mk_fp_pos_inf(sort: BitwuzlaSort) -> BitwuzlaTerm;
 }
 extern "C" {
+    #[doc = " Create a floating-point negative infinity value (SMT-LIB: `-oo`).\n\n @param sort The sort of the value.\n @return A term representing the floating-point negative infinity value of\n         given floating-point sort.\n @see\n   * `bitwuzla_mk_fp_sort`"]
     pub fn bitwuzla_mk_fp_neg_inf(sort: BitwuzlaSort) -> BitwuzlaTerm;
 }
 extern "C" {
+    #[doc = " Create a floating-point NaN value.\n\n @param sort The sort of the value.\n @return A term representing the floating-point NaN value of given\n         floating-point sort.\n @see\n   * `bitwuzla_mk_fp_sort`"]
     pub fn bitwuzla_mk_fp_nan(sort: BitwuzlaSort) -> BitwuzlaTerm;
 }
 extern "C" {
+    #[doc = " Create a bit-vector value from its string representation.\n\n Parameter `base` determines the base of the string representation.\n\n @note Given value must fit into a bit-vector of given size (sort).\n\n @param sort The sort of the value.\n @param value A string representing the value.\n @param base The base in which the string is given; `2` for binary, `10` for\n             decimal, and `16` for hexadecimal.\n\n @return A term of kind BITWUZLA_KIND_VAL, representing the bit-vector value\n         of given sort.\n\n @see\n   * `bitwuzla_mk_bv_sort`"]
     pub fn bitwuzla_mk_bv_value(
         sort: BitwuzlaSort,
         value: *const ::std::os::raw::c_char,
@@ -871,12 +1016,15 @@ extern "C" {
     ) -> BitwuzlaTerm;
 }
 extern "C" {
+    #[doc = " Create a bit-vector value from its unsigned integer representation.\n\n @note Given value must fit into a bit-vector of given size (sort).\n\n @param sort The sort of the value.\n @param value The unsigned integer representation of the bit-vector value.\n\n @return A term of kind BITWUZLA_KIND_VAL, representing the bit-vector value\n         of given sort.\n\n @see\n   * `bitwuzla_mk_bv_sort`"]
     pub fn bitwuzla_mk_bv_value_uint64(sort: BitwuzlaSort, value: u64) -> BitwuzlaTerm;
 }
 extern "C" {
+    #[doc = " Create a bit-vector value from its signed integer representation.\n\n @note Given value must fit into a bit-vector of given size (sort).\n\n @param sort The sort of the value.\n @param value The unsigned integer representation of the bit-vector value.\n\n @return A term of kind BITWUZLA_KIND_VAL, representing the bit-vector value\n         of given sort.\n\n @see\n   * `bitwuzla_mk_bv_sort`"]
     pub fn bitwuzla_mk_bv_value_int64(sort: BitwuzlaSort, value: i64) -> BitwuzlaTerm;
 }
 extern "C" {
+    #[doc = " Create a floating-point value from its IEEE 754 standard representation\n given as three bit-vector values representing the sign bit, the exponent and\n the significand.\n\n @param bv_sign The sign bit.\n @param bv_exponent The exponent bit-vector value.\n @param bv_significand The significand bit-vector value.\n\n @return A term of kind BITWUZLA_KIND_VAL, representing the floating-point\n         value."]
     pub fn bitwuzla_mk_fp_value(
         bv_sign: BitwuzlaTerm,
         bv_exponent: BitwuzlaTerm,
@@ -884,6 +1032,7 @@ extern "C" {
     ) -> BitwuzlaTerm;
 }
 extern "C" {
+    #[doc = " Create a floating-point value from its real representation, given as a\n decimal string, with respect to given rounding mode.\n\n @note Given rounding mode may be an arbitrary, non-value rounding mode term.\n       If it is a value, the returned term will be a floating-point value,\n       else a non-value floating-point term.\n\n @param sort The sort of the value.\n @param rm The rounding mode.\n @param real The decimal string representing a real value.\n\n @return A floating-point representation of the given real string. If `rm`\n         is of kind BITWUZLA_KIND_VALUE the floating-point will be of kind\n         BITWUZLA_KIND_VALUE, else it will be a non-value term.\n @see\n   * `bitwuzla_mk_fp_sort`"]
     pub fn bitwuzla_mk_fp_from_real(
         sort: BitwuzlaSort,
         rm: BitwuzlaTerm,
@@ -891,6 +1040,7 @@ extern "C" {
     ) -> BitwuzlaTerm;
 }
 extern "C" {
+    #[doc = " Create a floating-point value from its rational representation, given as a\n two decimal strings representing the numerator and denominator, with respect\n to given rounding mode.\n\n @note Given rounding mode may be an arbitrary, non-value rounding mode term.\n       If it is a value, the returned term will be a floating-point value,\n       else a non-value floating-point term.\n\n @param sort The sort of the value.\n @param rm The rounding mode.\n @param num The decimal string representing the numerator.\n @param den The decimal string representing the denominator.\n\n @return A floating-point representation of the given rational string. If\n         `rm` is of kind BITWUZLA_KIND_VALUE the floating-point will be of\n         kind BITWUZLA_KIND_VALUE, else it will be a non-value term.\n @see\n   * `bitwuzla_mk_fp_sort`"]
     pub fn bitwuzla_mk_fp_from_rational(
         sort: BitwuzlaSort,
         rm: BitwuzlaTerm,
@@ -899,12 +1049,15 @@ extern "C" {
     ) -> BitwuzlaTerm;
 }
 extern "C" {
+    #[doc = " Create a rounding mode value.\n\n @param rm The rounding mode value.\n\n @return A term of kind BITWUZLA_KIND_VAL, representing the rounding mode\n         value.\n\n @see\n   * `BitwuzlaRoundingMode`"]
     pub fn bitwuzla_mk_rm_value(rm: BitwuzlaRoundingMode) -> BitwuzlaTerm;
 }
 extern "C" {
+    #[doc = " Create a term of given kind with one argument term.\n\n @param kind The operator kind.\n @param arg The argument to the operator.\n\n @return A term representing an operation of given kind.\n\n @see\n   * `BitwuzlaKind`"]
     pub fn bitwuzla_mk_term1(kind: BitwuzlaKind, arg: BitwuzlaTerm) -> BitwuzlaTerm;
 }
 extern "C" {
+    #[doc = " Create a term of given kind with two argument terms.\n\n @param kind The operator kind.\n @param arg0 The first argument to the operator.\n @param arg1 The second argument to the operator.\n\n @return A term representing an operation of given kind.\n\n @see\n   * `BitwuzlaKind`"]
     pub fn bitwuzla_mk_term2(
         kind: BitwuzlaKind,
         arg0: BitwuzlaTerm,
@@ -912,6 +1065,7 @@ extern "C" {
     ) -> BitwuzlaTerm;
 }
 extern "C" {
+    #[doc = " Create a term of given kind with three argument terms.\n\n @param kind The operator kind.\n @param arg0 The first argument to the operator.\n @param arg1 The second argument to the operator.\n @param arg2 The third argument to the operator.\n\n @return A term representing an operation of given kind.\n\n @see\n   * `BitwuzlaKind`"]
     pub fn bitwuzla_mk_term3(
         kind: BitwuzlaKind,
         arg0: BitwuzlaTerm,
@@ -920,10 +1074,12 @@ extern "C" {
     ) -> BitwuzlaTerm;
 }
 extern "C" {
+    #[doc = " Create a term of given kind with the given argument terms.\n\n @param kind The operator kind.\n @param argc The number of argument terms.\n @param args The argument terms.\n\n @return A term representing an operation of given kind.\n\n @see\n   * `BitwuzlaKind`"]
     pub fn bitwuzla_mk_term(kind: BitwuzlaKind, argc: u32, args: *mut BitwuzlaTerm)
         -> BitwuzlaTerm;
 }
 extern "C" {
+    #[doc = " Create an indexed term of given kind with one argument term and one index.\n\n @param kind The operator kind.\n @param arg The argument term.\n @param idx The index.\n\n @return A term representing an indexed operation of given kind.\n\n @see\n   * `BitwuzlaKind`"]
     pub fn bitwuzla_mk_term1_indexed1(
         kind: BitwuzlaKind,
         arg: BitwuzlaTerm,
@@ -931,6 +1087,7 @@ extern "C" {
     ) -> BitwuzlaTerm;
 }
 extern "C" {
+    #[doc = " Create an indexed term of given kind with one argument term and two indices.\n\n @param kind The operator kind.\n @param arg The argument term.\n @param idx0 The first index.\n @param idx1 The second index.\n\n @return A term representing an indexed operation of given kind.\n\n @see\n   * `BitwuzlaKind`"]
     pub fn bitwuzla_mk_term1_indexed2(
         kind: BitwuzlaKind,
         arg: BitwuzlaTerm,
@@ -939,6 +1096,7 @@ extern "C" {
     ) -> BitwuzlaTerm;
 }
 extern "C" {
+    #[doc = " Create an indexed term of given kind with two argument terms and one index.\n\n @param kind The operator kind.\n @param arg0 The first argument term.\n @param arg1 The second argument term.\n @param idx The index.\n\n @return A term representing an indexed operation of given kind.\n\n @see\n   * `BitwuzlaKind`"]
     pub fn bitwuzla_mk_term2_indexed1(
         kind: BitwuzlaKind,
         arg0: BitwuzlaTerm,
@@ -947,6 +1105,7 @@ extern "C" {
     ) -> BitwuzlaTerm;
 }
 extern "C" {
+    #[doc = " Create an indexed term of given kind with two argument terms and two indices.\n\n @param kind The operator kind.\n @param arg0 The first argument term.\n @param arg1 The second argument term.\n @param idx0 The first index.\n @param idx1 The second index.\n\n @return A term representing an indexed operation of given kind.\n\n @see\n   * `BitwuzlaKind`"]
     pub fn bitwuzla_mk_term2_indexed2(
         kind: BitwuzlaKind,
         arg0: BitwuzlaTerm,
@@ -956,6 +1115,7 @@ extern "C" {
     ) -> BitwuzlaTerm;
 }
 extern "C" {
+    #[doc = " Create an indexed term of given kind with the given argument terms and\n indices.\n\n @param kind The operator kind.\n @param argc The number of argument terms.\n @param args The argument terms.\n @param idxc The number of indices.\n @param idxs The indices.\n\n @return A term representing an indexed operation of given kind.\n\n @see\n   * `BitwuzlaKind`"]
     pub fn bitwuzla_mk_term_indexed(
         kind: BitwuzlaKind,
         argc: u32,
@@ -965,21 +1125,25 @@ extern "C" {
     ) -> BitwuzlaTerm;
 }
 extern "C" {
+    #[doc = " Create a (first-order) constant of given sort with given symbol.\n\n @param sort The sort of the constant.\n @param symbol The symbol of the constant.\n\n @return A term of kind BITWUZLA_KIND_CONST, representing the constant.\n\n @see\n   * `bitwuzla_mk_array_sort`\n   * `bitwuzla_mk_bool_sort`\n   * `bitwuzla_mk_bv_sort`\n   * `bitwuzla_mk_fp_sort`\n   * `bitwuzla_mk_fun_sort`\n   * `bitwuzla_mk_rm_sort`"]
     pub fn bitwuzla_mk_const(
         sort: BitwuzlaSort,
         symbol: *const ::std::os::raw::c_char,
     ) -> BitwuzlaTerm;
 }
 extern "C" {
+    #[doc = " Create a one-dimensional constant array of given sort, initialized with\n given value.\n\n @param sort The sort of the array.\n @param value The term to initialize the elements of the array with.\n\n @return A term of kind BITWUZLA_KIND_CONST_ARRAY, representing a constant\n         array of given sort.\n\n @see\n   * `bitwuzla_mk_array_sort`"]
     pub fn bitwuzla_mk_const_array(sort: BitwuzlaSort, value: BitwuzlaTerm) -> BitwuzlaTerm;
 }
 extern "C" {
+    #[doc = " Create a variable of given sort with given symbol.\n\n @note This creates a variable to be bound by quantifiers or lambdas.\n\n @param sort The sort of the variable.\n @param symbol The symbol of the variable.\n\n @return A term of kind BITWUZLA_KIND_VAR, representing the variable.\n\n @see\n   * `bitwuzla_mk_bool_sort`\n   * `bitwuzla_mk_bv_sort`\n   * `bitwuzla_mk_fp_sort`\n   * `bitwuzla_mk_fun_sort`\n   * `bitwuzla_mk_rm_sort`"]
     pub fn bitwuzla_mk_var(
         sort: BitwuzlaSort,
         symbol: *const ::std::os::raw::c_char,
     ) -> BitwuzlaTerm;
 }
 extern "C" {
+    #[doc = " Substitute a set of keys with their corresponding values in the given term.\n\n @param term The term in which the keys are to be substituted.\n @param map_size The size of the substitution map.\n @param map_keys The keys.\n @param map_values The mapped values.\n\n @return The resulting term from this substitution."]
     pub fn bitwuzla_substitute_term(
         term: BitwuzlaTerm,
         map_size: usize,
@@ -988,6 +1152,7 @@ extern "C" {
     ) -> BitwuzlaTerm;
 }
 extern "C" {
+    #[doc = " Substitute a set of keys with their corresponding values in the set of given\n terms.\n\n The terms in `terms` are replaced with the terms resulting from these\n substitutions.\n\n @param terms_size The size of the set of terms.\n @param terms The terms in which the keys are to be substituted.\n @param map_size The size of the substitution map.\n @param map_keys The keys.\n @param map_values The mapped values."]
     pub fn bitwuzla_substitute_terms(
         terms_size: usize,
         terms: *mut BitwuzlaTerm,
